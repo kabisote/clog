@@ -5,6 +5,7 @@ import Web.View.Territories.Index
 import Web.View.Territories.New
 import Web.View.Territories.Edit
 import Web.View.Territories.Show
+import Web.Controller.Prelude (Territory'(phoneNumbers))
 
 instance Controller TerritoriesController where
     action TerritoriesAction = do
@@ -19,6 +20,7 @@ instance Controller TerritoriesController where
 
     action ShowTerritoryAction { territoryId } = do
         territory <- fetch territoryId
+                 >>= fetchRelated #phoneNumbers
         render ShowView { .. }
 
     action EditTerritoryAction { territoryId } = do
