@@ -1,6 +1,6 @@
 module Web.View.Territories.Show where
 import Web.View.Prelude
-import Web.View.PhoneNumbers.Index (renderPhoneNumber)
+import qualified Web.View.PhoneNumbers.Index (renderPhoneNumber) 
 
 newtype ShowView = ShowView { territory :: Include "phoneNumbers" Territory }
 
@@ -16,20 +16,21 @@ instance View ShowView where
                             [ breadcrumbLink "Back" TerritoriesAction
                             , breadcrumbText "Show Territory"
                             ]
-            renderPhoneNumber phoneNumber = [hsx|
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Phone Numbers</th>
-                                <th scope="col">Source</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class={ if (get #doNotCall phoneNumber) then "table-danger" :: Text else "table-default" }>
-                                <td><a href={ ShowPhoneNumberAction (get #id phoneNumber)}>0{ get #phoneNumber phoneNumber }</a></td>
-                                <td>{ get #source phoneNumber }</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                |]
+
+renderPhoneNumber phoneNumber = [hsx|
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Phone Numbers</th>
+                    <th scope="col">Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class={ if (get #doNotCall phoneNumber) then "table-danger" :: Text else "table-default" }>
+                    <td><a href={ ShowPhoneNumberAction (get #id phoneNumber)}>0{ get #phoneNumber phoneNumber }</a></td>
+                    <td>{ get #source phoneNumber }</td>
+                </tr>
+            </tbody>
+        </table>
+    |]
 
