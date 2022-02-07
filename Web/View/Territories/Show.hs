@@ -6,7 +6,10 @@ newtype ShowView = ShowView { territory :: Include "phoneNumbers" Territory }
 instance View ShowView where
     html ShowView { .. } = [hsx|
         <h1 class="mb-4 pt-4">{ get #name territory } (Group { get #groupNumber territory })</h1>
-        <div><a href={ NewPhoneNumberAction (get #id territory) } class="btn btn-primary my-4">Add Phone Number</a></div>
+        <p>
+            <a href={ TerritoriesAction } class="btn btn-secondary mr-2">Back</a>
+            <a href={ NewPhoneNumberAction (get #id territory) } class="btn btn-primary">Add Phone Number</a>
+        </p>
 
         <table class="table">
             <thead>
