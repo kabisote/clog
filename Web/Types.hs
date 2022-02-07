@@ -28,3 +28,13 @@ data PhoneNumbersController
     | UpdatePhoneNumberAction { phoneNumberId :: !(Id PhoneNumber) }
     | DeletePhoneNumberAction { phoneNumberId :: !(Id PhoneNumber) }
     deriving (Eq, Show, Data)
+
+data CallsController
+    = CallsAction
+    | NewCallAction
+    | ShowCallAction { callId :: !(Id Call) }
+    | CreateCallAction
+    | EditCallAction { callId :: !(Id Call) }
+    | UpdateCallAction { callId :: !(Id Call) }
+    | DeleteCallAction { callId :: !(Id Call) }
+    deriving (Eq, Show, Data)

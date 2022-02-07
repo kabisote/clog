@@ -10,3 +10,6 @@ instance AutoRoute TerritoriesController
 
 instance AutoRoute PhoneNumbersController
 
+
+instance AutoRoute CallsController
+
