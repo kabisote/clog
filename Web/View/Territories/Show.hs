@@ -1,6 +1,5 @@
 module Web.View.Territories.Show where
 import Web.View.Prelude
-import qualified Web.View.PhoneNumbers.Index (renderPhoneNumber) 
 
 newtype ShowView = ShowView { territory :: Include "phoneNumbers" Territory }
 
