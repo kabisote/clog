@@ -5,14 +5,17 @@ import Web.View.Calls.Index
 import Web.View.Calls.New
 import Web.View.Calls.Edit
 import Web.View.Calls.Show
+import Web.Controller.Prelude (Call'(phoneNumberId), PhoneNumber' (phoneNumber))
 
 instance Controller CallsController where
     action CallsAction = do
         calls <- query @Call |> fetch
         render IndexView { .. }
 
-    action NewCallAction = do
+    action NewCallAction { phoneNumberId } = do
         let call = newRecord
+                |> set #phoneNumberId phoneNumberId
+        phoneNumber <- fetch phoneNumberId
         render NewView { .. }
 
     action ShowCallAction { callId } = do
@@ -39,7 +42,9 @@ instance Controller CallsController where
         call
             |> buildCall
             |> ifValid \case
-                Left call -> render NewView { .. } 
+                Left call -> do
+                    phoneNumber <- fetch (get #phoneNumberId call)
+                    render NewView { .. } 
                 Right call -> do
                     call <- call |> createRecord
                     setSuccessMessage "Call created"

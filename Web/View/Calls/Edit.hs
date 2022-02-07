@@ -17,9 +17,10 @@ instance View EditView where
 
 renderForm :: Call -> Html
 renderForm call = formFor call [hsx|
-    {(textField #phoneNumberId)}
-    {(textField #agents)}
+    {(hiddenField #phoneNumberId)}
+    {(textField #agents) { fieldLabel = "Publisher(s)" }}
     {(textField #remarks)}
-    {submitButton}
+    <a class="btn btn-secondary mr-2" href={ShowPhoneNumberAction (get #phoneNumberId call)}>Cancel</a>
+    {submitButton { label = "Edit Call Record" }}
 
 |]

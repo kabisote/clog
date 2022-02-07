@@ -31,7 +31,7 @@ data PhoneNumbersController
 
 data CallsController
     = CallsAction
-    | NewCallAction
+    | NewCallAction { phoneNumberId :: !(Id PhoneNumber) }
     | ShowCallAction { callId :: !(Id Call) }
     | CreateCallAction
     | EditCallAction { callId :: !(Id Call) }

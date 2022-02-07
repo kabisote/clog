@@ -8,7 +8,7 @@ instance View ShowView where
         {breadcrumb}
         <h1>Show PhoneNumber</h1>
         <p>{phoneNumber}</p>
-        <p><a class="btn btn-primary" href={NewCallAction}>Add Call Record</a></p>
+        <p><a class="btn btn-primary" href={NewCallAction (get #id phoneNumber)}>Add Call Record</a></p>
 
     |]
         where

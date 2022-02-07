@@ -1,7 +1,7 @@
 module Web.View.Calls.New where
 import Web.View.Prelude
 
-data NewView = NewView { call :: Call }
+data NewView = NewView { call :: Call, phoneNumber :: PhoneNumber }
 
 instance View NewView where
     html NewView { .. } = [hsx|
@@ -17,9 +17,10 @@ instance View NewView where
 
 renderForm :: Call -> Html
 renderForm call = formFor call [hsx|
-    {(textField #phoneNumberId)}
-    {(textField #agents)}
+    {(hiddenField #phoneNumberId)}
+    {(textField #agents) { fieldLabel = "Publisher(s)" }}
     {(textField #remarks)}
-    {submitButton}
+    <a class="btn btn-secondary mr-2" href={ShowPhoneNumberAction (get #phoneNumberId call)}>Cancel</a>
+    {submitButton { label = "Create Call Record" }}
 
 |]
