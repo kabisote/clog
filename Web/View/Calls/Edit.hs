@@ -21,6 +21,6 @@ renderForm call = formFor call [hsx|
     {(textField #agents) { fieldLabel = "Publisher(s)" }}
     {(textField #remarks)}
     <a class="btn btn-secondary mr-2" href={ShowPhoneNumberAction (get #phoneNumberId call)}>Cancel</a>
-    {submitButton { label = "Edit Call Record" }}
+    {submitButton { label = "Save" }}
 
 |]
