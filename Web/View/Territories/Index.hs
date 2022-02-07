@@ -6,7 +6,8 @@ newtype IndexView = IndexView { territories :: [Territory]  }
 instance View IndexView where
     html IndexView { .. } = [hsx|
 
-        <h1 class="mb-4 pt-4">Territories <a href={pathTo NewTerritoryAction} class="btn btn-primary ml-4">+ New</a></h1>
+        <h1 class="mb-4 pt-4">Territories</h1>
+        <p> <a href={pathTo NewTerritoryAction} class="btn btn-primary">Add Territory</a></p>
 
         <div class="row  row-cols-1 row-cols-md-3 g-4">
             <!-- Common Territory -->
