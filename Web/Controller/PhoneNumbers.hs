@@ -5,7 +5,7 @@ import Web.View.PhoneNumbers.Index
 import Web.View.PhoneNumbers.New
 import Web.View.PhoneNumbers.Edit
 import Web.View.PhoneNumbers.Show
-import Web.Controller.Prelude (PhoneNumber'(territoryId))
+import Web.Controller.Prelude (PhoneNumber'(territoryId), PhoneNumbersController (territoryId))
 import Web.View.PhoneNumbers.Edit (EditView(phoneNumber))
 
 instance Controller PhoneNumbersController where
@@ -21,6 +21,7 @@ instance Controller PhoneNumbersController where
 
     action ShowPhoneNumberAction { phoneNumberId } = do
         phoneNumber <- fetch phoneNumberId
+                    >>= fetchRelated #calls
         render ShowView { .. }
 
     action EditPhoneNumberAction { phoneNumberId } = do
@@ -36,7 +37,7 @@ instance Controller PhoneNumbersController where
                 Right phoneNumber -> do
                     phoneNumber <- phoneNumber |> updateRecord
                     setSuccessMessage "PhoneNumber updated"
-                    redirectTo EditPhoneNumberAction { .. }
+                    redirectTo ShowPhoneNumberAction { phoneNumberId }
 
     action CreatePhoneNumberAction = do
         let phoneNumber = newRecord @PhoneNumber
@@ -49,7 +50,7 @@ instance Controller PhoneNumbersController where
                 Right phoneNumber -> do
                     phoneNumber <- phoneNumber |> createRecord
                     setSuccessMessage "PhoneNumber created"
-                    redirectTo PhoneNumbersAction
+                    redirectTo ShowTerritoryAction { territoryId = get #territoryId phoneNumber }
 
     action DeletePhoneNumberAction { phoneNumberId } = do
         phoneNumber <- fetch phoneNumberId

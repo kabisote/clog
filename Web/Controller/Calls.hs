@@ -48,7 +48,7 @@ instance Controller CallsController where
                 Right call -> do
                     call <- call |> createRecord
                     setSuccessMessage "Call created"
-                    redirectTo CallsAction
+                    redirectTo ShowPhoneNumberAction { phoneNumberId = get #phoneNumberId call }
 
     action DeleteCallAction { callId } = do
         call <- fetch callId
