@@ -7,7 +7,7 @@ instance View IndexView where
     html IndexView { .. } = [hsx|
         {breadcrumb}
 
-        <h1>Phone Numbers</h1>
+        <h1 class="mb-4 pt-4">Phone Numbers</h1>
         <div class="table-responsive">
             <table class="table">
                 <thead>

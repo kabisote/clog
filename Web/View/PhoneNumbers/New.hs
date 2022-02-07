@@ -8,8 +8,7 @@ data NewView = NewView { phoneNumber :: PhoneNumber
 
 instance View NewView where
     html NewView { .. } = [hsx|
-        {breadcrumb}
-        <h1>New Phone Number for <q>{ get #name territory }</q></h1>
+        <h1 class="mb-4 pt-4">New Phone Number for <q>{ get #name territory }</q></h1>
         {renderForm phoneNumber}
     |]
         where
@@ -25,6 +24,6 @@ renderForm phoneNumber = formFor phoneNumber [hsx|
     {(hiddenField #territoryId)}
     {(checkboxField #doNotCall)}
     <a class="btn btn-secondary mr-2" href={ShowTerritoryAction (get #territoryId phoneNumber)}>Cancel</a>
-    {submitButton { label = "Create Phone Number" }}
+    {submitButton { label = "Save" }}
 
 |]

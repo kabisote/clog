@@ -5,8 +5,7 @@ data EditView = EditView { territory :: Territory }
 
 instance View EditView where
     html EditView { .. } = [hsx|
-        {breadcrumb}
-        <h1>Edit Territory</h1>
+        <h1 class="mb-4 pt-4">Edit Territory</h1>
         {renderForm territory}
     |]
         where
@@ -19,6 +18,7 @@ renderForm :: Territory -> Html
 renderForm territory = formFor territory [hsx|
     {(textField #name)}
     {(textField #groupNumber)}
-    {submitButton}
+    <a class="btn btn-secondary mr-2" href={TerritoriesAction}>Cancel</a>
+    {submitButton {label = "Save"}}
 
 |]

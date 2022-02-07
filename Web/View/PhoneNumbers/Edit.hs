@@ -5,8 +5,7 @@ data EditView = EditView { phoneNumber :: PhoneNumber }
 
 instance View EditView where
     html EditView { .. } = [hsx|
-        {breadcrumb}
-        <h1>Edit PhoneNumber</h1>
+        <h1 class="mb-4 pt-4">Edit Phone Number</h1>
         {renderForm phoneNumber}
     |]
         where
@@ -22,6 +21,6 @@ renderForm phoneNumber = formFor phoneNumber [hsx|
     {(hiddenField #territoryId)}
     {(checkboxField #doNotCall)}
     <a class="btn btn-secondary mr-2" href={ShowPhoneNumberAction (get #id phoneNumber)}>Cancel</a>
-    {submitButton { label = "Save Edits" }}
+    {submitButton { label = "Save" }}
 
 |]
