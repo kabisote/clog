@@ -19,8 +19,9 @@ renderForm :: PhoneNumber -> Html
 renderForm phoneNumber = formFor phoneNumber [hsx|
     {(textField #phoneNumber)}
     {(textField #source)}
-    {(textField #territoryId)}
-    {(textField #doNotCall)}
-    {submitButton}
+    {(hiddenField #territoryId)}
+    {(checkboxField #doNotCall)}
+    <a class="btn btn-secondary mr-2" href={ShowPhoneNumberAction (get #id phoneNumber)}>Cancel</a>
+    {submitButton { label = "Save Edits" }}
 
 |]

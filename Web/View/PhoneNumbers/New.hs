@@ -1,6 +1,6 @@
 module Web.View.PhoneNumbers.New where
 import Web.View.Prelude
-import Web.View.Prelude (FormField(autofocus))
+import Web.View.Prelude (FormField(autofocus), TerritoriesController (territoryId), PhoneNumbersController (territoryId), PhoneNumber' (territoryId))
 
 data NewView = NewView { phoneNumber :: PhoneNumber
                        , territory :: Territory 
@@ -24,6 +24,7 @@ renderForm phoneNumber = formFor phoneNumber [hsx|
     {(textField #source)}
     {(hiddenField #territoryId)}
     {(checkboxField #doNotCall)}
+    <a class="btn btn-secondary mr-2" href={ShowTerritoryAction (get #territoryId phoneNumber)}>Cancel</a>
     {submitButton { label = "Create Phone Number" }}
 
 |]
