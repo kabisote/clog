@@ -43,7 +43,8 @@ instance Controller PhoneNumbersController where
         let phoneNumber = newRecord @PhoneNumber
         phoneNumber
             |> buildPhoneNumber
-            |> ifValid \case
+            |> validateIsUnique #phoneNumber
+            >>= ifValid \case
                 Left phoneNumber -> do
                     territory <- fetch (get #territoryId phoneNumber)
                     render NewView { .. } 
