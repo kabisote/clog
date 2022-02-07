@@ -41,7 +41,9 @@ instance Controller TerritoriesController where
         let territory = newRecord @Territory
         territory
             |> buildTerritory
-            |> ifValid \case
+            |> validateField #name nonEmpty
+            |> validateIsUnique #name
+            >>= ifValid \case
                 Left territory -> render NewView { .. } 
                 Right territory -> do
                     territory <- territory |> createRecord

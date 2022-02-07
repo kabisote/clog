@@ -41,6 +41,8 @@ instance Controller CallsController where
         let call = newRecord @Call
         call
             |> buildCall
+            |> validateField #agents nonEmpty
+            |> validateField #remarks nonEmpty
             |> ifValid \case
                 Left call -> do
                     phoneNumber <- fetch (get #phoneNumberId call)
