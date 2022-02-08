@@ -9,6 +9,8 @@ import Web.Controller.Prelude (PhoneNumber'(territoryId), PhoneNumbersController
 import Web.View.PhoneNumbers.Edit (EditView(phoneNumber))
 
 instance Controller PhoneNumbersController where
+    beforeAction = ensureIsUser
+
     action PhoneNumbersAction = do
         phoneNumbers <- query @PhoneNumber |> fetch
         render IndexView { .. }

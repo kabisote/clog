@@ -7,6 +7,8 @@ import Web.View.Territories.Edit
 import Web.View.Territories.Show
 
 instance Controller TerritoriesController where
+    beforeAction = ensureIsUser
+
     action TerritoriesAction = do
         territories <- query @Territory
             |> orderByAsc #name 

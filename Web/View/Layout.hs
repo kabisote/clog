@@ -9,6 +9,7 @@ import IHP.Controller.RequestContext
 import Web.Types
 import Web.Routes
 import Application.Helper.View
+import Network.HTTP.Media (RenderHeader(renderHeader))
 
 defaultLayout :: Html -> Html
 defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
@@ -21,12 +22,49 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     <title>{pageTitleOrDefault "App"}</title>
 </head>
 <body>
+    {renderNavBar}
     <div class="container mt-4">
         {renderFlashMessages}
         {inner}
     </div>
 </body>
 |]
+
+renderNavBar :: Html
+renderNavBar = [hsx|
+   <header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 mr-2 text-white text-decoration-none">
+        Home
+        </a>
+
+        <ul class="nav col-12 col-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
+            {showLinks}
+        </ul>
+
+        <div class="text-end">
+            {showLoginLogout}
+        </div>
+      </div>
+    </div>
+  </header> 
+|]
+    where
+        showLinks =
+            case currentUserOrNothing of
+                Just currentUser -> [hsx|
+                    <li><a href={TerritoriesAction} class="nav-link px-2 text-white">Territories</a></li>
+                    <li><a href={UsersAction} class="nav-link px-2 text-white">Users</a></li>
+                |]
+
+                Nothing -> [hsx||]
+
+        showLoginLogout =
+            case currentUserOrNothing of
+                Just currentUser -> [hsx|<a class="js-delete js-delete-no-confirm btn btn-warning" href={DeleteSessionAction}>Logout</a>|]
+                Nothing          -> [hsx|<a class="btn btn-warning" href={NewSessionAction}>Login</a>|]
+
 
 -- The 'assetPath' function used below appends a `?v=SOME_VERSION` to the static assets in production
 -- This is useful to avoid users having old CSS and JS files in their browser cache once a new version is deployed

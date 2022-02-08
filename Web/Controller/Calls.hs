@@ -8,6 +8,8 @@ import Web.View.Calls.Show
 import Web.Controller.Prelude (Call'(phoneNumberId), PhoneNumber' (phoneNumber))
 
 instance Controller CallsController where
+    beforeAction = ensureIsUser
+
     action CallsAction = do
         calls <- query @Call |> fetch
         render IndexView { .. }
