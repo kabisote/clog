@@ -12,7 +12,7 @@ instance Controller SessionsController where
 
 instance SessionsControllerConfig User where
     beforeLogin = updateLoginHistory
-    afterLoginRedirectPath = "/Territories"
+    afterLoginRedirectPath = pathTo TerritoriesAction
 
 updateLoginHistory user = do
     user
