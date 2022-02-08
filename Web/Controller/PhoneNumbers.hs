@@ -23,6 +23,7 @@ instance Controller PhoneNumbersController where
 
     action ShowPhoneNumberAction { phoneNumberId } = do
         phoneNumber <- fetch phoneNumberId
+                    >>= pure . modify #calls (orderByDesc #createdAt)
                     >>= fetchRelated #calls
         render ShowView { .. }
 
