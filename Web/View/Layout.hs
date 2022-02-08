@@ -1,4 +1,4 @@
-module Web.View.Layout (defaultLayout, Html) where
+module Web.View.Layout (defaultLayout, loginLayout, Html) where
 
 import IHP.ViewPrelude
 import IHP.Environment
@@ -13,21 +13,78 @@ import Network.HTTP.Media (RenderHeader(renderHeader))
 
 defaultLayout :: Html -> Html
 defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
-<head>
-    {metaTags}
+    <head>
+        {metaTags}
 
-    {stylesheets}
-    {scripts}
+        {stylesheets}
+        {scripts}
 
-    <title>{pageTitleOrDefault "App"}</title>
-</head>
-<body>
-    {renderNavBar}
-    <div class="container mt-4">
-        {renderFlashMessages}
-        {inner}
-    </div>
-</body>
+        <title>{pageTitleOrDefault "App"}</title>
+    </head>
+    <body>
+        {renderNavBar}
+        <div class="container mt-4">
+            {renderFlashMessages}
+            {inner}
+        </div>
+    </body>
+|]
+
+loginLayout :: Html -> Html
+loginLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
+    <head>
+        {stylesheets}
+        {scripts}
+        <title>Login</title>
+        <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          display: flex;
+          align-items: center;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-color: #f5f5f5;
+        }
+
+        .form-signin {
+          width: 100%;
+          max-width: 330px;
+          padding: 15px;
+          margin: auto;
+        }
+
+        .form-signin .checkbox {
+          font-weight: 400;
+        }
+
+        .form-signin .form-floating:focus-within {
+          z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            {renderFlashMessages}
+            {inner}
+        </div>
+    </body>
 |]
 
 renderNavBar :: Html
@@ -51,6 +108,7 @@ renderNavBar = [hsx|
   </header> 
 |]
     where
+        showLinks :: Html
         showLinks =
             case currentUserOrNothing of
                 Just currentUser -> [hsx|
@@ -60,6 +118,7 @@ renderNavBar = [hsx|
 
                 Nothing -> [hsx||]
 
+        showLoginLogout :: Html
         showLoginLogout =
             case currentUserOrNothing of
                 Just currentUser -> [hsx|<a class="js-delete js-delete-no-confirm btn btn-warning" href={DeleteSessionAction}>Logout</a>|]
