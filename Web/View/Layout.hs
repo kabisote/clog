@@ -19,20 +19,18 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
             {stylesheets}
             {scripts}
 
-            <title>{pageTitleOrDefault "App"}</title>
+            <title>{pageTitleOrDefault "clog"}</title>
         </head>
         <body>
             <header class="p-3 bg-dark text-white">
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 mr-2 text-white text-decoration-none">Home</a>
-
                         <ul class="nav col-12 col-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                            {when isLoggedIn showLinks}
+                            {when (isLoggedIn && isSuper)  showLinks}
                         </ul>
 
                         <div class="text-end">
-                            {if isLoggedIn then showLogin else showLogout}
+                            {if isLoggedIn then showLogout else ""}
                         </div>
                     </div>
                 </div>
@@ -46,18 +44,21 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     |]
     where
         isLoggedIn = isJust currentUserOrNothing
+        isSuper    = get #id currentUser == "b536d6e2-35b8-4edd-ad2a-2361db89e48b"
 
         showLinks :: Html
         showLinks = [hsx|
                 <li><a href={TerritoriesAction} class="nav-link px-2 text-white">Territories</a></li>
+                <li><a href={PhoneNumbersAction} class="nav-link px-2 text-white">Phone Numbers</a></li>
+                <li><a href={CallsAction} class="nav-link px-2 text-white">Calls</a></li>
                 <li><a href={UsersAction} class="nav-link px-2 text-white">Users</a></li>
             |]
 
         showLogin :: Html
-        showLogin = [hsx|<a class="js-delete js-delete-no-confirm btn btn-warning" href={DeleteSessionAction}>Logout</a>|]
+        showLogin = [hsx|<a class="btn btn-warning" href={NewSessionAction}>Login</a>|]
 
         showLogout :: Html
-        showLogout = [hsx|<a class="btn btn-warning" href={NewSessionAction}>Login</a>|]
+        showLogout = [hsx|<a class="js-delete js-delete-no-confirm btn btn-warning" href={DeleteSessionAction}>Logout</a>|]
 
 
 loginLayout :: Html -> Html

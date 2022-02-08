@@ -59,17 +59,48 @@ INSERT INTO public.territories (id, name, group_number) VALUES ('538bc0c6-3f34-4
 INSERT INTO public.territories (id, name, group_number) VALUES ('8152f657-da21-4a98-83c4-d3259cff0880', 'Holyghost', 8);
 INSERT INTO public.territories (id, name, group_number) VALUES ('ea99844a-c30e-4ec9-b4d8-4b49c59a6e28', 'Honeymoon', 8);
 INSERT INTO public.territories (id, name, group_number) VALUES ('d56cfbd3-c260-41aa-880c-60c8170f37e5', 'Imelda Village', 8);
-INSERT INTO public.territories (id, name, group_number) VALUES ('5ae4e416-3e22-49c8-bf01-bf06f57cf8fb', 'Kagitingan, Kabayanihan, Pacdal', 0);
-INSERT INTO public.territories (id, name, group_number) VALUES ('f615897a-076e-4f7d-93b0-c50df870e13f', 'Public Market, Hilltop', 0);
+INSERT INTO public.territories (id, name, group_number) VALUES ('2312e2fa-29e0-4d2f-8648-151b35afcd44', 'Pacdal', 0);
+INSERT INTO public.territories (id, name, group_number) VALUES ('e39a0e11-308b-4216-8e8f-dcba8b321e17', 'Kabayanihan', 0);
+INSERT INTO public.territories (id, name, group_number) VALUES ('738b11e3-1a7f-4c20-91c6-fa4e493b7ee0', 'Hilltop', 0);
+INSERT INTO public.territories (id, name, group_number) VALUES ('5ae4e416-3e22-49c8-bf01-bf06f57cf8fb', 'Kagitingan', 0);
+INSERT INTO public.territories (id, name, group_number) VALUES ('f615897a-076e-4f7d-93b0-c50df870e13f', 'Public Market', 0);
+INSERT INTO public.territories (id, name, group_number) VALUES ('ad86f31f-b720-4f54-951a-fa4b867f586b', 'Outside our Territory', 0);
 
 
 ALTER TABLE public.territories ENABLE TRIGGER ALL;
 
 
-ALTER TABLE public.numbers DISABLE TRIGGER ALL;
+ALTER TABLE public.phone_numbers DISABLE TRIGGER ALL;
+
+INSERT INTO public.phone_numbers (id, phone_number, source, territory_id, do_not_call) VALUES ('527b740e-69f8-4344-af3c-d8f5d6010355', 9162232260, 'google maps', '544e98c8-5a7f-4618-81a8-dc9d6a815f3f', true);
+INSERT INTO public.phone_numbers (id, phone_number, source, territory_id, do_not_call) VALUES ('330afb5b-f9ea-4c19-8f6f-7bcb3a3e31ac', 9212104210, 'directory', '544e98c8-5a7f-4618-81a8-dc9d6a815f3f', false);
 
 
+ALTER TABLE public.phone_numbers ENABLE TRIGGER ALL;
 
-ALTER TABLE public.numbers ENABLE TRIGGER ALL;
+
+ALTER TABLE public.calls DISABLE TRIGGER ALL;
+
+INSERT INTO public.calls (id, phone_number_id, agents, remarks, created_at) VALUES ('c0094086-a30a-45f7-bc7c-5007e230f003', '527b740e-69f8-4344-af3c-d8f5d6010355', 'Marc', 'Sobrang interesado. Huwag na daw akong tumawag.', '2022-02-07 15:54:06.098489+08');
+INSERT INTO public.calls (id, phone_number_id, agents, remarks, created_at) VALUES ('fdeee38d-fd19-4f5f-98ea-40824367eaa5', '527b740e-69f8-4344-af3c-d8f5d6010355', 'Cherry', 'The quick brown fox jumps over the lazy dog.', '2022-02-07 18:49:54.795844+08');
+
+
+ALTER TABLE public.calls ENABLE TRIGGER ALL;
+
+
+ALTER TABLE public.users DISABLE TRIGGER ALL;
+
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('3734bf69-02d3-40a9-a626-cf84f864f636', 'g2@ntb.org', 'sha256|17|qQ8pcVmSWFMrPeURvJd6Xw==|YdgusT+pwN++NwhWmGlYFqYhq1D8qsJraWVyQms4wOI=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('23a487b4-605a-4c5a-8d47-f627edfaa6b3', 'g3@ntb.org', 'sha256|17|j+mhSxeonkOpmcGm1ksJqg==|C0sVvMNH3LJ16+Y+UGf0RQnLYUYLSAa8+ltxm8oFmVI=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('95033a39-6a51-4dee-8308-b9a803e34e93', 'g4@ntb.org', 'sha256|17|GM6vYzSgi3hRtHKAgF2a2w==|8K7XPh8QLETZL4kPs0cM6Ortb3NphDm2D1z+RQsJOFg=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('a4d308bc-0c90-4dfa-a93d-5422df7b20a7', 'g5@ntb.org', 'sha256|17|u/PtyB6phS6GhSEucBgYIw==|21yAQMiYUfktisRZxxYj0yf0U/1YXkA+R3UGHXAFa7k=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('e84a6c9e-57fc-4439-a86e-cdcfdb64d702', 'g6@ntb.org', 'sha256|17|kNwxuSOW0ydIew1wez+1AQ==|QBFS13leudyR1fAaXIEBz9wdu2eVzPetBE89tALUDNM=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('ea296d28-8b1e-475e-b8b1-a7fa90656639', 'g7@ntb.org', 'sha256|17|JyBxmtgDAPHBcE0t4O0tdA==|VcAIkMMt6VQwdeMgt1zsqP3DC2VHja3BDPtGBwtRXS4=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('816708a8-c84b-4af0-a900-e83c61a55d9e', 'g8@ntb.org', 'sha256|17|oZgtAYT6V94YPCK5YjO4DA==|ivb+lED1mLZxVPWJz4Otifr5PkNBC9txxzIgq77jd9Q=', NULL, 0, 0);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('f765fb43-cb6e-4ab3-a6f2-c4c68996c6d3', 'g1@ntb.org', 'sha256|17|lk9xEujXKsyNKjYo8Dw9zw==|7Z979QY9KkNnRIkUKjBVqFrSLoq62tKoXJU/DMcGCxQ=', NULL, 0, 6);
+INSERT INTO public.users (id, email, password_hash, locked_at, failed_login_attempts, logins) VALUES ('b536d6e2-35b8-4edd-ad2a-2361db89e48b', 'mai@devera.tugas', 'sha256|17|4Livzh8Jhq5BvjNcNeNtoQ==|9JtPKCy7Y3M+i/0zo8Ryt18VFGAJ0gfSMCmfwXfMXDk=', NULL, 0, 2);
+
+
+ALTER TABLE public.users ENABLE TRIGGER ALL;
 
 
