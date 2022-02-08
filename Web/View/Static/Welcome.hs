@@ -40,3 +40,4 @@ instance View WelcomeView where
               </p>
          </div> 
 |]
+
