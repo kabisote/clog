@@ -1,11 +1,12 @@
 module Web.View.Territories.Show where
 import Web.View.Prelude
+import Web.View.Prelude (Territory'(groupNumber))
 
 newtype ShowView = ShowView { territory :: Include "phoneNumbers" Territory }
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
-        <h1 class="mb-4 pt-4">{ get #name territory } (Group { get #groupNumber territory })</h1>
+        <h1 class="mb-4 pt-4">{ get #name territory } ({ if isCommonTerritory then "Common Territory" else renderGroupNumber })</h1>
         <p>
             <a href={ TerritoriesAction } class="btn btn-secondary mr-2">Back</a>
             <a href={ NewPhoneNumberAction (get #id territory) } class="btn btn-primary">Add Phone Number</a>
@@ -26,6 +27,9 @@ instance View ShowView where
                             [ breadcrumbLink "Back" TerritoriesAction
                             , breadcrumbText "Show Territory"
                             ]
+
+            isCommonTerritory = get #groupNumber territory == 0
+            renderGroupNumber = [hsx| Group {get #groupNumber territory} |]
 
 renderPhoneNumber phoneNumber = [hsx|
     <tr class={ if (get #doNotCall phoneNumber) then "table-danger" :: Text else "table-default" }>
