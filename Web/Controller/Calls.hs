@@ -5,7 +5,7 @@ import Web.View.Calls.Index
 import Web.View.Calls.New
 import Web.View.Calls.Edit
 import Web.View.Calls.Show
-import Web.Controller.Prelude (Call'(phoneNumberId), PhoneNumber' (phoneNumber))
+import Web.Controller.Prelude (Call'(phoneNumberId, createdAt), PhoneNumber' (phoneNumber))
 
 instance Controller CallsController where
     beforeAction = ensureIsUser
@@ -15,7 +15,9 @@ instance Controller CallsController where
         render IndexView { .. }
 
     action NewCallAction { phoneNumberId } = do
+        currentTime <- getCurrentTime
         let call = newRecord
+                |> set #createdAt currentTime
                 |> set #phoneNumberId phoneNumberId
         phoneNumber <- fetch phoneNumberId
         render NewView { .. }
