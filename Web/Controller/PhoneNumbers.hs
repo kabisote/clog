@@ -60,7 +60,7 @@ instance Controller PhoneNumbersController where
         phoneNumber <- fetch phoneNumberId
         deleteRecord phoneNumber
         setSuccessMessage "PhoneNumber deleted"
-        redirectTo PhoneNumbersAction
+        redirectTo TerritoriesAction
 
 buildPhoneNumber phoneNumber = phoneNumber
     |> fill @["phoneNumber","source","territoryId","doNotCall"]
