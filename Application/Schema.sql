@@ -26,7 +26,9 @@ CREATE TABLE users (
     password_hash TEXT NOT NULL,
     locked_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
     failed_login_attempts INT DEFAULT 0 NOT NULL,
-    logins INT NOT NULL
+    logins INT NOT NULL,
+    user_role INT DEFAULT 3 NOT NULL,
+    group_number INT DEFAULT 0 NOT NULL
 );
 ALTER TABLE calls ADD CONSTRAINT calls_ref_phone_number_id FOREIGN KEY (phone_number_id) REFERENCES phone_numbers (id) ON DELETE CASCADE;
 ALTER TABLE phone_numbers ADD CONSTRAINT phone_numbers_ref_territory_id FOREIGN KEY (territory_id) REFERENCES territories (id) ON DELETE SET NULL;
