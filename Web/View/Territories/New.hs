@@ -17,7 +17,7 @@ instance View NewView where
 renderForm :: Territory -> Html
 renderForm territory = formFor territory [hsx|
     {(textField #name)}
-    {(textField #groupNumber)}
+    {(numberField #groupNumber)}
     <a class="btn btn-secondary mr-2" href={TerritoriesAction}>Cancel</a>
     {submitButton {label = "Save"}}
 

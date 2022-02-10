@@ -1,6 +1,5 @@
 module Web.View.Territories.Index where
 import Web.View.Prelude
-import Web.View.Prelude (Territory'(groupNumber), User' (groupNumber))
 
 newtype IndexView = IndexView { territories :: [Territory]  }
 
@@ -14,9 +13,9 @@ instance View IndexView where
                 <div class="col">
                     <div class="card my-4">
                         <h5 class="card-header">Group {get #groupNumber currentUser} Territory</h5>
-                        <ul class="list-group list-group-flush">
+                        <div class="list-group list-group-flush">
                             {forEach territories renderGroupTerritory}
-                        </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -53,13 +52,6 @@ renderCommonTerritory territory = [hsx|
 
 territoryDetails :: Territory -> Html
 territoryDetails territory = [hsx|
-        <li class="list-group-item">
-            <a href={ShowTerritoryAction (get #id territory)}>{get #name territory}</a>
-            (
-            <a href={EditTerritoryAction (get #id territory)} class="text-muted">Edit</a>
-            |
-            <a href={DeleteTerritoryAction (get #id territory)} class="js-delete text-muted">Delete</a>
-            )
-        </li>
+        <a class="list-group-item list-group-item-action" href={ShowTerritoryAction (get #id territory)}>{get #name territory}</a>
     |]
 

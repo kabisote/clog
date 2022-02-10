@@ -8,14 +8,18 @@ instance View ShowView where
     html ShowView { .. } = [hsx|
         <h1 class="mb-4 pt-4">{ get #name territory } ({ if isCommonTerritory then "Common Territory" else renderGroupNumber })</h1>
         <p>
-            <a href={ TerritoriesAction } class="btn btn-secondary mr-2">Back</a>
-            <a href={ NewPhoneNumberAction (get #id territory) } class="btn btn-primary">Add Phone Number</a>
+            <a href={ TerritoriesAction } class="btn btn-secondary mr-4">Back to Territories</a>
+            <a href={EditTerritoryAction (get #id territory)} class="text-muted">Edit</a>
+            |
+            <a href={DeleteTerritoryAction (get #id territory)} class="js-delete text-muted">Delete</a>
         </p>
-
+        <hr />
+        <h3 class="my-4">Phone Numbers</h3>
+        <p><a href={ NewPhoneNumberAction (get #id territory) } class="btn btn-primary">Add Phone Number</a></p>
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Phone Numbers</th>
+                    <th scope="col">Number</th>
                     <th scope="col">Source</th>
                 </tr>
             </thead>
