@@ -1,8 +1,7 @@
 module Web.View.PhoneNumbers.Show where
 import Web.View.Prelude
-import Web.View.Prelude (PhoneNumber'(doNotCall, territoryId), Call' (phoneNumberId))
 
-data ShowView = ShowView { phoneNumber :: Include "calls" PhoneNumber }
+newtype ShowView = ShowView { phoneNumber :: Include "calls" PhoneNumber }
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
@@ -15,10 +14,9 @@ instance View ShowView where
             <dd class="col-sm-10">{ get #doNotCall phoneNumber}</dd>
         </dl>
         <p>
-            <a class="btn btn-secondary mr-4" href={ ShowTerritoryAction (get #territoryId phoneNumber) }>Back to Territory</a>
-            <a href={EditPhoneNumberAction (get #id phoneNumber)} class="text-muted">Edit</a>
-            |
-            <a href={DeletePhoneNumberAction (get #id phoneNumber)} class="js-delete text-muted">Delete</a>
+            <a class="btn btn-secondary mr-2" href={ ShowTerritoryAction (get #territoryId phoneNumber) }>Back to Territory</a>
+            <a class="btn btn-primary mr-2" href={EditPhoneNumberAction (get #id phoneNumber)}>Edit</a>
+            <a class="btn btn-danger mr-2" href={DeletePhoneNumberAction (get #id phoneNumber)}>Delete</a>
         </p>
         <hr />
         <h3 class="my-4">Records</h3>

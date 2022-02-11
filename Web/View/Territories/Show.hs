@@ -9,9 +9,7 @@ instance View ShowView where
         <h1 class="mb-4 pt-4">{ get #name territory } ({ if isCommonTerritory then "Common Territory" else renderGroupNumber })</h1>
         <p>
             <a href={ TerritoriesAction } class="btn btn-secondary mr-4">Back to Territories</a>
-            <a href={EditTerritoryAction (get #id territory)} class="text-muted">Edit</a>
-            |
-            <a href={DeleteTerritoryAction (get #id territory)} class="js-delete text-muted">Delete</a>
+            { when isAdmin renderEditDelete }
         </p>
         <hr />
         <h3 class="my-4">Phone Numbers</h3>
@@ -32,8 +30,14 @@ instance View ShowView where
                             , breadcrumbText "Show Territory"
                             ]
 
+            isAdmin = get #userRole currentUser == 1
             isCommonTerritory = get #groupNumber territory == 0
             renderGroupNumber = [hsx| Group {get #groupNumber territory} |]
+            renderEditDelete  = [hsx|
+                    <a href={EditTerritoryAction (get #id territory)} class="text-muted">Edit</a>
+                    |
+                    <a href={DeleteTerritoryAction (get #id territory)} class="js-delete text-muted">Delete</a>
+                |]
 
 renderPhoneNumber phoneNumber = [hsx|
     <tr class={ if (get #doNotCall phoneNumber) then "table-danger" :: Text else "table-default" }>

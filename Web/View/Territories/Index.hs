@@ -1,12 +1,13 @@
 module Web.View.Territories.Index where
 import Web.View.Prelude
+import Web.View.Prelude (User'(userRole))
 
 newtype IndexView = IndexView { territories :: [Territory]  }
 
 instance View IndexView where
     html IndexView { .. } = [hsx|
             <h1 class="mb-4 pt-4">Territories</h1>
-            <p> <a href={pathTo NewTerritoryAction} class="btn btn-primary">Add Territory</a></p>
+            { when isAdmin renderAddButton }
 
             <div class="row  row-cols-1 row-cols-md-2 g-4">
                 <!-- Group Territory -->
@@ -36,6 +37,8 @@ instance View IndexView where
                 [ breadcrumbLink "Territories" TerritoriesAction
                 ]
 
+            isAdmin = get #userRole currentUser == 1
+            renderAddButton = [hsx|<p><a href={pathTo NewTerritoryAction} class="btn btn-primary">Add Territory</a></p>|]
 
 
 renderGroupTerritory :: Territory -> Html
