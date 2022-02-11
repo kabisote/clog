@@ -63,4 +63,4 @@ instance Controller CallsController where
         redirectTo CallsAction
 
 buildCall call = call
-    |> fill @["phoneNumberId","agents","remarks"]
+    |> fill @["phoneNumberId","createdAt","agents","remarks"]
