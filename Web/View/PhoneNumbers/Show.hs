@@ -16,7 +16,7 @@ instance View ShowView where
         <p>
             <a class="btn btn-secondary mr-2" href={ ShowTerritoryAction (get #territoryId phoneNumber) }>Back to Territory</a>
             <a class="btn btn-primary mr-2" href={EditPhoneNumberAction (get #id phoneNumber)}>Edit</a>
-            <a class="btn btn-danger mr-2" href={DeletePhoneNumberAction (get #id phoneNumber)}>Delete</a>
+            <a class="btn btn-danger mr-2 js-delete" href={DeletePhoneNumberAction (get #id phoneNumber)}>Delete</a>
         </p>
         <hr />
         <h3 class="my-4">Records</h3>

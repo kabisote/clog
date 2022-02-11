@@ -5,8 +5,6 @@ import Web.View.PhoneNumbers.Index
 import Web.View.PhoneNumbers.New
 import Web.View.PhoneNumbers.Edit
 import Web.View.PhoneNumbers.Show
-import Web.Controller.Prelude (PhoneNumber'(territoryId), PhoneNumbersController (territoryId))
-import Web.View.PhoneNumbers.Edit (EditView(phoneNumber))
 
 instance Controller PhoneNumbersController where
     beforeAction = ensureIsUser
@@ -60,7 +58,7 @@ instance Controller PhoneNumbersController where
         phoneNumber <- fetch phoneNumberId
         deleteRecord phoneNumber
         setSuccessMessage "PhoneNumber deleted"
-        redirectTo TerritoriesAction
+        redirectTo ShowTerritoryAction { territoryId = get #territoryId phoneNumber }
 
 buildPhoneNumber phoneNumber = phoneNumber
     |> fill @["phoneNumber","source","territoryId","doNotCall"]
