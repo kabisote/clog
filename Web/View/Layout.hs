@@ -26,7 +26,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                         <ul class="nav col-12 col-lg-auto mr-auto mb-2 justify-content-center mb-md-0">
-                            {when (isLoggedIn && isSuper)  showLinks}
+                            {when (isLoggedIn && isAdmin)  showLinks}
                         </ul>
 
                         <div class="text-end">
@@ -44,7 +44,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     |]
     where
         isLoggedIn = isJust currentUserOrNothing
-        isSuper    = get #id currentUser == "b536d6e2-35b8-4edd-ad2a-2361db89e48b"
+        isAdmin = get #userRole currentUser == 1
 
         showLinks :: Html
         showLinks = [hsx|
