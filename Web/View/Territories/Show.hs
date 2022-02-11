@@ -1,8 +1,9 @@
 module Web.View.Territories.Show where
 import Web.View.Prelude
-import Web.View.Prelude (Territory'(groupNumber))
 
-newtype ShowView = ShowView { territory :: Include "phoneNumbers" Territory }
+data ShowView = ShowView { territory :: Territory
+                         , phoneNumbers :: [Include "calls" PhoneNumber]
+                         }
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
@@ -19,9 +20,10 @@ instance View ShowView where
                 <tr>
                     <th scope="col">Number</th>
                     <th scope="col">Source</th>
+                    <th scope="col">Most Recent Call</th>
                 </tr>
             </thead>
-            <tbody>{ forEach (get #phoneNumbers territory) renderPhoneNumber }</tbody>
+            <tbody>{ forEach phoneNumbers renderPhoneNumber }</tbody>
         </table>
     |]
         where
@@ -39,10 +41,19 @@ instance View ShowView where
                     <a href={DeleteTerritoryAction (get #id territory)} class="js-delete text-muted">Delete</a>
                 |]
 
+renderPhoneNumber :: Include "calls" PhoneNumber -> Html
 renderPhoneNumber phoneNumber = [hsx|
-    <tr class={ if (get #doNotCall phoneNumber) then "table-danger" :: Text else "table-default" }>
-        <td><a href={ ShowPhoneNumberAction (get #id phoneNumber)}>0{ get #phoneNumber phoneNumber }</a></td>
-        <td>{ get #source phoneNumber }</td>
-    </tr>
-|]
+        <tr class={ if (get #doNotCall phoneNumber) then "table-danger" :: Text else "table-default" }>
+            <td><a href={ ShowPhoneNumberAction (get #id phoneNumber)}>0{ get #phoneNumber phoneNumber }</a></td>
+            <td>{ get #source phoneNumber }</td>
+            <td>{ forEach calls renderCall }</td>
+        </tr>
+    |]
+    where
+        calls = get #calls phoneNumber
+
+renderCall :: Call -> Html
+renderCall call = [hsx|
+        {get #createdAt call |> timeAgo} by {get #agents call}
+    |]
 

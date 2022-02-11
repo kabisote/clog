@@ -21,7 +21,14 @@ instance Controller TerritoriesController where
 
     action ShowTerritoryAction { territoryId } = do
         territory <- fetch territoryId
-                 >>= fetchRelated #phoneNumbers
+
+        phoneNumbers <- query @PhoneNumber 
+            |> filterWhere (#territoryId, territoryId) 
+            |> fetch
+            >>= pure . map (modify #calls (orderByDesc #createdAt))
+            >>= pure . map (modify #calls (limit 1))
+            >>= collectionFetchRelated #calls 
+                
         render ShowView { .. }
 
     action EditTerritoryAction { territoryId } = do

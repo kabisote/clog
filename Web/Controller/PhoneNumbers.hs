@@ -37,7 +37,7 @@ instance Controller PhoneNumbersController where
                 Left phoneNumber -> render EditView { .. }
                 Right phoneNumber -> do
                     phoneNumber <- phoneNumber |> updateRecord
-                    setSuccessMessage "PhoneNumber updated"
+                    setSuccessMessage "Phone Number updated"
                     redirectTo ShowPhoneNumberAction { phoneNumberId }
 
     action CreatePhoneNumberAction = do
@@ -51,13 +51,13 @@ instance Controller PhoneNumbersController where
                     render NewView { .. } 
                 Right phoneNumber -> do
                     phoneNumber <- phoneNumber |> createRecord
-                    setSuccessMessage "PhoneNumber created"
+                    setSuccessMessage "Phone Number created"
                     redirectTo ShowTerritoryAction { territoryId = get #territoryId phoneNumber }
 
     action DeletePhoneNumberAction { phoneNumberId } = do
         phoneNumber <- fetch phoneNumberId
         deleteRecord phoneNumber
-        setSuccessMessage "PhoneNumber deleted"
+        setSuccessMessage "Phone Number deleted"
         redirectTo ShowTerritoryAction { territoryId = get #territoryId phoneNumber }
 
 buildPhoneNumber phoneNumber = phoneNumber
