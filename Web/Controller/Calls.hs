@@ -6,6 +6,7 @@ import Web.View.Calls.New
 import Web.View.Calls.Edit
 import Web.View.Calls.Show
 import Web.Controller.Prelude (Call'(phoneNumberId, createdAt), PhoneNumber' (phoneNumber))
+import qualified Text.MMark as MMark
 
 instance Controller CallsController where
     beforeAction = ensureIsUser
@@ -64,3 +65,10 @@ instance Controller CallsController where
 
 buildCall call = call
     |> fill @["phoneNumberId","createdAt","agents","remarks"]
+
+isMarkdown :: Text -> ValidatorResult
+isMarkdown text =
+    case MMark.parse "" text of
+        Left  _ -> Failure "Please provide valid Markdown."
+        Right _ -> Success
+

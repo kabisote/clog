@@ -1,5 +1,6 @@
 module Web.View.PhoneNumbers.Show where
 import Web.View.Prelude
+import qualified Text.MMark as MMark
 
 newtype ShowView = ShowView { phoneNumber :: Include "calls" PhoneNumber }
 
@@ -30,15 +31,23 @@ instance View ShowView where
                             , breadcrumbText "Show PhoneNumber"
                             ]
 
-            renderCall call = [hsx|
-                <dl class="row shadow-sm p-3 mb-5 bg-body rounded">
-                    <dt class="col-sm-2">Publisher(s)</dt>
-                    <dd class="col-sm-10">{ get #agents call }</dd>
+renderCall :: Call -> Html
+renderCall call = [hsx|
+    <dl class="row shadow-sm p-3 mb-5 bg-body rounded">
+        <dt class="col-sm-2">Publisher(s)</dt>
+        <dd class="col-sm-10">{ get #agents call }</dd>
 
-                    <dt class="col-sm-2">When Called</dt>
-                    <dd class="col-sm-10">{ get #createdAt call |> timeAgo }</dd>
+        <dt class="col-sm-2">When Called</dt>
+        <dd class="col-sm-10">{ get #createdAt call |> timeAgo }</dd>
 
-                    <dt class="col-sm-2">Remarks</dt>
-                    <dd class="col-sm-10">{ get #remarks call }</dd>
-                </dl>
-            |]
+        <dt class="col-sm-2">Remarks</dt>
+        <dd class="col-sm-10">{ get #remarks call |> renderMarkdown }</dd>
+    </dl>
+|]
+
+renderMarkdown :: Text -> Html
+renderMarkdown text =
+    case text |> MMark.parse "" of
+        Left error -> "Something went wrong."
+        Right markdown -> MMark.render markdown |> tshow |> preEscapedToHtml
+
