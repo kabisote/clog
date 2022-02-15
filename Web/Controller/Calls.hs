@@ -61,7 +61,7 @@ instance Controller CallsController where
         call <- fetch callId
         deleteRecord call
         setSuccessMessage "Call deleted"
-        redirectTo CallsAction
+        redirectTo ShowPhoneNumberAction { phoneNumberId = get #phoneNumberId call }
 
 buildCall call = call
     |> fill @["phoneNumberId","createdAt","agents","remarks"]
