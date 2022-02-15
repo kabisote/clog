@@ -40,7 +40,7 @@ instance Controller CallsController where
                 Right call -> do
                     call <- call |> updateRecord
                     setSuccessMessage "Call updated"
-                    redirectTo EditCallAction { .. }
+                    redirectTo ShowPhoneNumberAction { phoneNumberId = get #phoneNumberId call }
 
     action CreateCallAction = do
         let call = newRecord @Call
